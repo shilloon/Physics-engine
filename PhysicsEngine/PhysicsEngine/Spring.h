@@ -3,27 +3,29 @@
 #include "Vec2.h"
 #include "Particle.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <cmath>
 
 class Spring {
 
 public:
-	Particle* p1;
-	Particle* p2;
+	int p1Index;
+	int p2Index;
 	float restLength;
 	float stiffness; // k
 	float damping; // °¨¼è °è¼ö
 
-	Spring(Particle* p1, Particle* p2, float stiffness, float damping = 0.1f)
-		: p1(p1), p2(p2), stiffness(stiffness), damping(damping)
-	{
-		Vec2 diff = p2->position - p1->position;
-		restLength = diff.length();
-	}
+	Spring(int p1Idx, int p2Idx, float restLength, float stiffness, float damping = 0.5f)
+		: p1Index(p1Idx), p2Index(p2Idx), restLength(restLength), stiffness(stiffness), damping(damping)
+	{}
 
-	// ½ºÇÁ¸µ Èû ÀÛ¿ë( F = -k * x)
-	void applyForce() {
+	// ½ºÇÁ¸µ Èû ÀÛ¿ë(F = -k * x)
+	void applyForce(std::vector<Particle>& particles) {
 
-		Vec2 diff = p2->position - p1->position;
+		Particle& p1 = particles[p1Index];
+		Particle& p2 = particles[p2Index];
+
+		Vec2 diff = p2.position - p1.position;
 		float currentLength = diff.length();
 
 		if (currentLength == 0) return;
@@ -38,7 +40,7 @@ public:
 		float forceMagnitude = -stiffness * extension;
 
 		// °¨¼è·Â Ãß°¡ (»ó´ë ¼Óµµ ºñ·Ê)
-		Vec2 relativeVel = p2->velocity - p1->velocity;
+		Vec2 relativeVel = p2.velocity - p1.velocity;
 		float dampingForce = -damping * relativeVel.dot(direction);
 
 		// ÃÑ Èû
@@ -46,66 +48,80 @@ public:
 		Vec2 force = direction * totalForce;
 
 		// ¾çÂÊ ÆÄÆ¼Å¬¿¡ ¹Ý´ë ¹æÇâ Èû Àû¿ë
-		p1->applyForce(force * -1.0f);
-		p2->applyForce(force);
+		p1.applyForce(force * -1.0f);
+		p2.applyForce(force);
 
 	}
 
-	void draw(sf::RenderWindow& window) {
+	void draw(sf::RenderWindow& window, const std::vector<Particle>& particles) {
 
-		Vec2 diff = p2->position - p1->position;
+		const Particle& p1 = particles[p1Index];
+		const Particle& p2 = particles[p2Index];
+
+		Vec2 diff = p2.position - p1.position;
 		float currentLength = diff.length();
 
-		// ´Ã¾î³ª¸é »¡°­, ÁÙ¾îµé¸é ÆÄ¶û
+		if (currentLength < 0.1f) return;
+
 		float extension = currentLength - restLength;
+		Vec2 direction = diff / currentLength;
+		Vec2 perpendicular(-direction.y, direction.x);
+
 		sf::Color color;
+		float extRatio = extension / restLength;
 
-		if (extension > 0) {
+		if (std::abs(extRatio) < 0.05f) {
 
-			// ´Ã¾î³²
-			int intensity = std::min(255, (int)(std::abs(extension) * 2));
-			color = sf::Color(255, 255 - intensity, 255 - intensity);
+			color = sf::Color(255, 255, 0);
+
+		}
+		else if (extension > 0) {
+
+			int intensity = std::min(200, (int)(std::abs(extRatio) * 400));
+			color = sf::Color(255, 255 - intensity, 100);
 
 		}
 		else {
 
-			// ÁÙ¾îµê
-			int intensity = std::min(255, (int)(std::abs(extension) * 2));
-			color = sf::Color(255 - intensity, 255 - intensity, 255);
+			int intensity = std::min(200, (int)(std::abs(extRatio) * 400));
+			color = sf::Color(100, 255 - intensity, 255);
 
 		}
 
-		// ¹°°á¼±
-		int segments = 10;
-		Vec2 direction = diff / currentLength;
-		Vec2 perpendicular(-direction.y, direction.x);
+		int coils = 8;
+		float coilRadius = 8.0f;
+		int pointsPerCoil = 8;
 
-		for (int i = 0; i < segments; i++) {
+		std::vector<sf::Vertex> vertices;
 
-			float t1 = (float)i / segments;
-			float t2 = (float)(i + 1) / segments;
+		for (int i = 0; i <= coils * pointsPerCoil; i++) {
 
-			Vec2 pos1 = p1->position + diff * t1;
-			Vec2 pos2 = p2->position + diff * t2;
+			float t = (float)i / (coils * pointsPerCoil);
 
-			// ¹°°á È¿°ú
-			float wave1 = std::sin(t1 * 3.14159f * 4) * 5.0f;
-			float wave2 = std::sin(t2 * 3.14159f * 4) * 5.0f;
+			Vec2 center = p1.position + diff * t;
 
-			pos1 += perpendicular * wave1;
-			pos2 += perpendicular * wave2;
-
-			sf::Vertex line[] = {
-
-				sf::Vertex(sf::Vector2f(pos1.x, pos1.y), color),
-				sf::Vertex(sf::Vector2f(pos2.x, pos2.y), color)
-
-			};
-
-			window.draw(line, 2, sf::Lines);
+			float angle = t * coils * 2 * 3.14159f;
+			float offset = std::sin(angle) * coilRadius;
+			 
+			Vec2 pos = center + perpendicular * offset;
+			vertices.push_back(sf::Vertex(sf::Vector2f(pos.x, pos.y), color));
 
 		}
+
+		window.draw(&vertices[0], vertices.size(), sf::LineStrip);
+
+		sf::Vertex startLine[] = {
+			sf::Vertex(sf::Vector2f(p1.position.x, p1.position.y), color),
+			sf::Vertex(sf::Vector2f(vertices[0].position.x, vertices[0].position.y), color)
+		};
+		window.draw(startLine, 2, sf::Lines);
+
+		sf::Vertex endLine[] = {
+			sf::Vertex(sf::Vector2f(vertices.back().position.x, vertices.back().position.y), color),
+			sf::Vertex(sf::Vector2f(p2.position.x, p2.position.y), color)
+		};
+		window.draw(endLine, 2, sf::Lines);
 
 	}
 
-};
+};	
