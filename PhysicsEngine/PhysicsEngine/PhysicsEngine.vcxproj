@@ -133,12 +133,14 @@
   <ItemGroup>
     <ClCompile Include="DistanceConstraint.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Spring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DistanceConstraint.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Polygon.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Vec2.h" />
