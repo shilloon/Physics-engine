@@ -135,6 +135,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SpatialHash.cpp" />
     <ClCompile Include="Spring.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="SpatialHash.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
