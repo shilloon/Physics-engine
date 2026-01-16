@@ -19,12 +19,13 @@ public:
 	float mass;
 	float inertia;
 	float restitution;
+	float friction; // 마찰 계수
 
 	std::vector<Vec2> localVertices; // 로컬 좌표계 꼭짓점
 
 	// === Constructor ===
-	Polygon(Vec2 position, const std::vector<Vec2>& vertices, float mass, float restitution)
-		:position(position), mass(mass), restitution(restitution), velocity(0, 0), acceleration(0, 0), angle(0), angularVelocity(0), angularAcceleration(0)
+	Polygon(Vec2 position, const std::vector<Vec2>& vertices, float mass, float restitution, float friction = 0.3f)
+		:position(position), mass(mass), restitution(restitution), friction(friction), velocity(0, 0), acceleration(0, 0), angle(0), angularVelocity(0), angularAcceleration(0)
 	{
 
 		// 로컬 좌표계로 변환
@@ -140,6 +141,7 @@ public:
 		position += velocity * dt;
 
 		angularVelocity += angularAcceleration * dt;
+		angularVelocity *= 0.98f;
 		angle += angularVelocity * dt;
 
 		acceleration = Vec2(0, 0);

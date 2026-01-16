@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DistanceConstraint.cpp" />
+    <ClCompile Include="FrictionTest.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="RigidBody.cpp" />
