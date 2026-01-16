@@ -135,6 +135,7 @@
     <ClCompile Include="FrictionTest.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Polygon.cpp" />
+    <ClCompile Include="Revolutejoint.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SpatialHash.cpp" />
     <ClCompile Include="Spring.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="DistanceConstraint.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Polygon.h" />
+    <ClInclude Include="Revolutejoint.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="SpatialHash.h" />
     <ClInclude Include="Spring.h" />

@@ -4,7 +4,7 @@
 //#include "Vec2.h"
 //#include "Polygon.h"
 //
-//// === Á¤´Ù°¢Çü »ý¼º ===
+//// === ï¿½ï¿½ï¿½Ù°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ===
 //std::vector<Vec2> createRegularPolygon(int sides, float radius) {
 //
 //	std::vector<Vec2> vertices;
@@ -22,7 +22,7 @@
 //
 //}
 //
-//// === ¹Ú½º -> ´Ù°¢Çü ===
+//// === ï¿½Ú½ï¿½ -> ï¿½Ù°ï¿½ï¿½ï¿½ ===
 //std::vector<Vec2> createBox(float width, float height) {
 //
 //	std::vector<Vec2> vertices;
@@ -38,21 +38,21 @@
 //
 //}
 //
-//// === »ï°¢Çü ===
+//// === ï¿½ï°¢ï¿½ï¿½ ===
 //std::vector<Vec2> createTriangle(float size) {
 //
 //	std::vector<Vec2> vertices;
 //	float height = size * std::sqrt(3.0f) / 2;
 //
-//	vertices.push_back(Vec2(0, -height * 2 / 3)); // À§
-//	vertices.push_back(Vec2(size / 2, height / 3)); // ¿À¸¥ÂÊ ¾Æ·¡
-//	vertices.push_back(Vec2(-size / 2, height / 3)); // ¿ÞÂÊ ¾Æ·¡
+//	vertices.push_back(Vec2(0, -height * 2 / 3)); // ï¿½ï¿½
+//	vertices.push_back(Vec2(size / 2, height / 3)); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½
+//	vertices.push_back(Vec2(-size / 2, height / 3)); // ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½
 //
 //	return vertices;
 //
 //}
 //
-//// === ºÒ±ÔÄ¢ ´Ù°¢Çü ===
+//// === ï¿½Ò±ï¿½Ä¢ ï¿½Ù°ï¿½ï¿½ï¿½ ===
 //std::vector<Vec2> createIrregularPolygon() {
 //
 //	std::vector<Vec2> vertices;
@@ -67,7 +67,7 @@
 //
 //}
 //
-//// === Ãæµ¹ Á¤º¸ ===
+//// === ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ===
 //struct CollisionInfo {
 //
 //	bool collided;
@@ -78,7 +78,7 @@
 //
 //};
 //
-//// === Åõ¿µ ===
+//// === ï¿½ï¿½ï¿½ï¿½ ===
 //void projectVertices(const std::vector<Vec2>& vertices, Vec2 axis, float& min, float& max) {
 //
 //	min = max = vertices[0].dot(axis);
@@ -93,7 +93,7 @@
 //
 //}
 //
-//// === SAT Ãæµ¹ °¨Áö ===
+//// === SAT ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ===
 //CollisionInfo checkPolygonCollision(const Polygon& a, const Polygon& b) {
 //
 //	CollisionInfo info;
@@ -107,7 +107,7 @@
 //	float minOverlap = FLT_MAX;
 //	Vec2 minAxis;
 //
-//	// ¸ðµç Ãà °Ë»ç
+//	// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ë»ï¿½
 //	std::vector<Vec2> allAxes;
 //	allAxes.insert(allAxes.end(), axesA.begin(), axesA.end());
 //	allAxes.insert(allAxes.end(), axesB.begin(), axesB.end());
@@ -119,7 +119,7 @@
 //		projectVertices(verticesA, axis, minA, maxA);
 //		projectVertices(verticesB, axis, minB, maxB);
 //
-//		// ºÐ¸®Ãà ¹ß°ß -> Ãæµ¹ ¾øÀ½
+//		// ï¿½Ð¸ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ -> ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
 //		if (maxA < minB || maxB < minA) {
 //
 //			info.collided = false;
@@ -127,7 +127,7 @@
 //
 //		}
 //
-//		// °ãÄ§ °è»ê
+//		// ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½
 //		float overlap = std::min(maxA, maxB) - std::max(minA, minB);
 //
 //		if (overlap < minOverlap) {
@@ -135,7 +135,7 @@
 //			minOverlap = overlap;
 //			minAxis = axis;
 //
-//			// ¹ý¼± ¹æÇâ Á¶Á¤
+//			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //			Vec2 centerDiff = b.position - a.position;
 //			if (centerDiff.dot(axis) < 0) {
 //
@@ -147,7 +147,7 @@
 //
 //	}
 //
-//	// ¸ðµç Ãà¿¡¼­ °ãÄ§ -> Ãæµ¹
+//	// ï¿½ï¿½ï¿½ ï¿½à¿¡ï¿½ï¿½ ï¿½ï¿½Ä§ -> ï¿½æµ¹
 //	info.collided = true;
 //	info.normal = minAxis.normalize();
 //	info.depth = minOverlap;
@@ -156,10 +156,10 @@
 //
 //}
 //
-//// === Ãæµ¹ ¹ÝÀÀ ===
+//// === ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ===
 //void resolvePolygonCollision(Polygon& a, Polygon& b, const CollisionInfo& info) {
 //
-//	// À§Ä¡ º¸Á¤
+//	// ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 //	float totalMass = a.mass + b.mass;
 //	float percent = 0.8f;
 //	Vec2 correction = info.normal * info.depth * percent;
@@ -167,13 +167,13 @@
 //	a.position -= correction * (b.mass / totalMass);
 //	b.position += correction * (a.mass / totalMass);
 //
-//	// Ãæµ¹Á¡
+//	// ï¿½æµ¹ï¿½ï¿½
 //	Vec2 contactPoint = (a.position + b.position) * 0.5f;
 //
 //	Vec2 rA = contactPoint - a.position;
 //	Vec2 rB = contactPoint - b.position;
 //
-//	// Ãæµ¹Á¡ ¼Óµµ
+//	// ï¿½æµ¹ï¿½ï¿½ ï¿½Óµï¿½
 //	Vec2 velA = a.velocity + Vec2(-rA.y * a.angularVelocity, rA.x * a.angularVelocity);
 //	Vec2 velB = b.velocity + Vec2(-rB.y * b.angularVelocity, rB.x * b.angularVelocity);
 //	Vec2 relativeVel = velB - velA;
@@ -213,20 +213,20 @@
 //	std::vector<Polygon> polygons;
 //	Vec2 gravity(0, 9.8f * 100);
 //
-//	// ´Ù¾çÇÑ ´Ù°¢Çü »ý¼º
+//	// ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ù°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //	polygons.push_back(Polygon(Vec2(200, 100), createTriangle(80), 1.5f, 0.6f));
 //	polygons.push_back(Polygon(Vec2(400, 150), createBox(80, 60), 2.0f, 0.7f));
 //	polygons.push_back(Polygon(Vec2(600, 100), createRegularPolygon(5, 40), 1.8f, 0.5f));
 //	polygons.push_back(Polygon(Vec2(300, 300), createRegularPolygon(6, 35), 1.5f, 0.6f));
 //	polygons.push_back(Polygon(Vec2(500, 350), createIrregularPolygon(), 1.2f, 0.8f));
 //
-//	// ÃÊ±â ¼Óµµ
+//	// ï¿½Ê±ï¿½ ï¿½Óµï¿½
 //	polygons[0].velocity = Vec2(50, 100);
 //	polygons[0].angularVelocity = 2.0f;
 //
 //	sf::Clock clock;
 //
-//	// µå·¡±×
+//	// ï¿½å·¡ï¿½ï¿½
 //	Polygon* draggedPolygon = nullptr;
 //	Vec2 dragStartPos;
 //	Vec2 dragOffset;
@@ -342,7 +342,7 @@
 //
 //		}
 //
-//		// Ãæµ¹ Ã³¸®
+//		// ï¿½æµ¹ Ã³ï¿½ï¿½
 //		for (size_t i = 0; i < polygons.size(); i++) {
 //
 //			for (size_t j = i + 1; j < polygons.size(); j++) {
