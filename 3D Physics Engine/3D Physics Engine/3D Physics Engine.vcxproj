@@ -133,6 +133,7 @@
     <ClCompile Include="glad\src\glad.c" />
     <ClCompile Include="LaunchTest.cpp" />
     <ClCompile Include="MathTest.cpp" />
+    <ClCompile Include="PhysicsBox.cpp" />
     <ClCompile Include="RotatingBox.cpp" />
     <ClCompile Include="TriangleTest.cpp" />
   </ItemGroup>
