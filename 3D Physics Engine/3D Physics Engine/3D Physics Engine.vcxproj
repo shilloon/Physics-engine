@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoxCollision.cpp" />
     <ClCompile Include="glad\src\glad.c" />
     <ClCompile Include="LaunchTest.cpp" />
     <ClCompile Include="MathTest.cpp" />
@@ -138,7 +139,9 @@
     <ClCompile Include="TriangleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collision3D.h" />
     <ClInclude Include="Mat4.h" />
+    <ClInclude Include="RigidBody3D.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
